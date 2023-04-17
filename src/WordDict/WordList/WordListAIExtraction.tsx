@@ -27,7 +27,7 @@ const tooltips = {
     <p> 用于生成输出的模型。 </p>`
 }
 
-const wordExtraction = async(text : string, openai_key : string, translationMode : string, tags : tagData[], model: string) => {
+const wordExtraction = async(text : string, openai_key : string, translationMode : string, tags : tagData[], model : string) => {
     const generatePrompt = {
         'English': `The user will send you a piece of text. You need to identify proper nouns or important conceptual vocabulary from it, and list them with their definitions. Definitions should be brief, ideally within one sentence. The format you list must be one word per line, with the word and its definition separated by a hyphen. For example:
 
@@ -35,7 +35,7 @@ const wordExtraction = async(text : string, openai_key : string, translationMode
         Mathematics-The study of numbers and abstract concepts
     
         Do not output any other content.`,
-        '中文': `用户将向您发送一段文本。您需要从其中识别出名词或重要的概念性词汇，并将其与其定义一起列出。定义应该简洁，理想情况下应该在一句话内。您列出的格式必须是每行一个单词，单词与其定义之间用hyphen分隔。例如：
+        'Chinese': `用户将向您发送一段文本。您需要从其中识别出名词或重要的概念性词汇，并将其与其定义一起列出。定义应该简洁，理想情况下应该在一句话内。您列出的格式必须是每行一个单词，单词与其定义之间用hyphen分隔。例如：
 
         经济学-研究商品和服务之间关系的社会科学
         数学-研究数字和抽象概念的学科
@@ -62,7 +62,7 @@ const wordExtraction = async(text : string, openai_key : string, translationMode
         
         If no tags are appropriate, omit the word from your output.
         Do not output any other content.`,
-        '中文': `用户将向您发送一组单词，对应的定义和标签列表。对于每个单词，给出适当的标签。
+        'Chinese': `用户将向您发送一组单词，对应的定义和标签列表。对于每个单词，给出适当的标签。
         您列出的格式必须是每行一个单词，单词与其标签之间用hyphen分隔，标签用逗号分隔。例如：
 
         用户输入：
@@ -82,27 +82,31 @@ const wordExtraction = async(text : string, openai_key : string, translationMode
 
     var dataString = ""
 
-    try {
-        const configuration = new Configuration({apiKey: openai_key});
-        delete configuration.baseOptions.headers['User-Agent'];
-        const openai = new OpenAIApi(configuration);
+    var trials = 0
+    while (dataString == "" && trials < 3) {
+        try {
+            const configuration = new Configuration({apiKey: openai_key});
+            delete configuration.baseOptions.headers['User-Agent'];
+            const openai = new OpenAIApi(configuration);
 
-        const completion = await openai.createChatCompletion({
-            model: model,
-            messages: [
-                {
-                    role: "system",
-                    content: generatePrompt[translationMode as keyof typeof generatePrompt]
-                }, {
-                    role: "user",
-                    content: text
-                }
-            ],
-            temperature: 0,
-        });
-        dataString = completion.data.choices[0].message.content
-    } catch (error) {
-        console.error('Error fetching data:', error);
+            const completion = await openai.createChatCompletion({
+                model: model,
+                messages: [
+                    {
+                        role: "system",
+                        content: generatePrompt[translationMode as keyof typeof generatePrompt]
+                    }, {
+                        role: "user",
+                        content: text
+                    }
+                ],
+                temperature: 0
+            });
+            dataString = completion.data.choices[0].message.content
+        } catch (error) {
+            console.error('Error fetching data:', error);
+            trials += 1;
+        }
     }
 
     const data = dataString
@@ -120,32 +124,36 @@ const wordExtraction = async(text : string, openai_key : string, translationMode
     var taggingData : any = []
 
     if (tags.length > 0) {
-        try {
-            const configuration = new Configuration({apiKey: openai_key});
-            delete configuration.baseOptions.headers['User-Agent'];
-            const openai = new OpenAIApi(configuration);
+        trials = 0
+        while (taggingString == "" && trials < 3) {
+            try {
+                const configuration = new Configuration({apiKey: openai_key});
+                delete configuration.baseOptions.headers['User-Agent'];
+                const openai = new OpenAIApi(configuration);
 
-            const completion = await openai.createChatCompletion({
-                model: model,
-                messages: [
-                    {
-                        role: "system",
-                        content: taggingPrompt[translationMode as keyof typeof taggingPrompt]
-                    }, {
-                        role: "user",
-                        content: `Text:
+                const completion = await openai.createChatCompletion({
+                    model: model,
+                    messages: [
+                        {
+                            role: "system",
+                            content: taggingPrompt[translationMode as keyof typeof taggingPrompt]
+                        }, {
+                            role: "user",
+                            content: `Text:
                                     ${dataString}
                                   Tags:
                                     ${tags
-                            .map(tag => tag.name)
-                            .join(', ')}`
-                    }
-                ],
-                temperature: 0,
-            });
-            taggingString = completion.data.choices[0].message.content
-        } catch (error) {
-            console.error('Error fetching data:', error);
+                                .map(tag => tag.name)
+                                .join(', ')}`
+                        }
+                    ],
+                    temperature: 0
+                });
+                taggingString = completion.data.choices[0].message.content
+            } catch (error) {
+                console.error('Error fetching data:', error);
+                trials += 1;
+            }
         }
 
         taggingData = taggingString
@@ -270,8 +278,8 @@ const WordListAIExtraction = (props : Props) => {
                 <div className='control'>
                     <div className='select'>
                         <select onChange={(e) => setTranslationMode(e.currentTarget.value)}>
-                            <option value={'中文'}>中文</option>
-                            <option value={'English'}>English</option>
+                            <option value='Chinese'>中文</option>
+                            <option value='English'>English</option>
                         </select>
                     </div>
                 </div>
