@@ -63,21 +63,30 @@
         "workbox-webpack-plugin": "^6.4.1"
     },
     "scripts": {
-        "predeploy": "npm run build",
-        "deploy": "gh-pages -d build",
         "start": "node scripts/start.js",
-        "build": "node scripts/build.js && mv build/index.html build/app.html",
+        "build": "node scripts/build.js && cd build && ren index.html app.html && cd ..",
         "test": "node scripts/test.js --env=jsdom",
-        "eject": "node eject"
+        "eject": "node eject",
+        "predeploy": "npm run build",
+        "deploy": "gh-pages -d build"
     },
     "eslintConfig": {
-        "extends": ["react-app", "react-app/jest"]
+        "extends": [
+            "react-app",
+            "react-app/jest"
+        ]
     },
     "browserslist": {
         "production": [
-            ">0.2%", "not dead", "not op_mini all"
+            ">0.2%",
+            "not dead",
+            "not op_mini all"
         ],
-        "development": ["last 1 chrome version", "last 1 firefox version", "last 1 safari version"]
+        "development": [
+            "last 1 chrome version",
+            "last 1 firefox version",
+            "last 1 safari version"
+        ]
     },
     "devDependencies": {
         "@fortawesome/fontawesome-free": "^6.4.0",
@@ -85,16 +94,24 @@
         "bulma": "^0.9.4",
         "gh-pages": "^5.0.0"
     },
-    "homepage": "https://bananaeat.github.io/wordStore",
+    "homepage": "https://bananaeat.github.io/wordStoreReact/",
     "jest": {
-        "roots": ["<rootDir>/src"],
-        "collectCoverageFrom": [
-            "src/**/*.{js,jsx,ts,tsx}", "!src/**/*.d.ts"
+        "roots": [
+            "<rootDir>/src"
         ],
-        "setupFiles": ["react-app-polyfill/jsdom"],
-        "setupFilesAfterEnv": ["<rootDir>/src/setupTests.ts"],
+        "collectCoverageFrom": [
+            "src/**/*.{js,jsx,ts,tsx}",
+            "!src/**/*.d.ts"
+        ],
+        "setupFiles": [
+            "react-app-polyfill/jsdom"
+        ],
+        "setupFilesAfterEnv": [
+            "<rootDir>/src/setupTests.ts"
+        ],
         "testMatch": [
-            "<rootDir>/src/**/__tests__/**/*.{js,jsx,ts,tsx}", "<rootDir>/src/**/*.{spec,test}.{js,jsx,ts,tsx}"
+            "<rootDir>/src/**/__tests__/**/*.{js,jsx,ts,tsx}",
+            "<rootDir>/src/**/*.{spec,test}.{js,jsx,ts,tsx}"
         ],
         "testEnvironment": "jsdom",
         "transform": {
@@ -103,7 +120,8 @@
             "^(?!.*\\.(js|jsx|mjs|cjs|ts|tsx|css|json)$)": "<rootDir>/config/jest/fileTransform.js"
         },
         "transformIgnorePatterns": [
-            "[/\\\\]node_modules[/\\\\].+\\.(js|jsx|mjs|cjs|ts|tsx)$", "^.+\\.module\\.(css|sass|scss)$"
+            "[/\\\\]node_modules[/\\\\].+\\.(js|jsx|mjs|cjs|ts|tsx)$",
+            "^.+\\.module\\.(css|sass|scss)$"
         ],
         "modulePaths": [],
         "moduleNameMapper": {
@@ -123,11 +141,14 @@
             "node"
         ],
         "watchPlugins": [
-            "jest-watch-typeahead/filename", "jest-watch-typeahead/testname"
+            "jest-watch-typeahead/filename",
+            "jest-watch-typeahead/testname"
         ],
         "resetMocks": true
     },
     "babel": {
-        "presets": ["react-app"]
+        "presets": [
+            "react-app"
+        ]
     }
 }
