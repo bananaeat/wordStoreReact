@@ -67,7 +67,7 @@ const Sidebar : React.FC < Props > = (props : Props) => {
 
     return (
         <div
-            className="SideBar column is-one-quarter-mobile is-one-quarter-tablet is-one-third-desktop is-one-third-widescreen is-one-quarter-fullhd">
+            className="SideBar column is-one-third-desktop is-one-third-widescreen is-one-quarter-fullhd pt-auto">
             <SidebarAddWord
                 onSave={async(wordData) => {
                 return await onSaveWord(wordData);

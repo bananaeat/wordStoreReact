@@ -59,15 +59,15 @@ const SidebarAddWord : React.FC < Props > = (props : Props) => {
         <div className="SidebarAddWord">
             <div className="has-background-light">
                 <div className="container">
-                    <div className="message">
+                    <div className="message is-small">
                         <h1 className="message-header">添加词语</h1>
-                        <div className="message-body">
+                        <div className="message-body padding-0-mobile">
                             <form id="add-word-form">
                                 <div className="field">
                                     <label className="label">词语</label>
                                     <div className="control">
                                         <input
-                                            className="input is-primary"
+                                            className="input is-primary is-small"
                                             type="text"
                                             placeholder="词语"
                                             id="word"
@@ -79,10 +79,10 @@ const SidebarAddWord : React.FC < Props > = (props : Props) => {
                                 </div>
 
                                 <div className="field">
-                                    <label className="label">定义</label>
+                                    <label className="label is-small">定义</label>
                                     <div className="control">
                                         <input
-                                            className="textarea is-info"
+                                            className="textarea is-info is-small"
                                             type="text"
                                             placeholder="定义"
                                             id="definition"
@@ -93,7 +93,7 @@ const SidebarAddWord : React.FC < Props > = (props : Props) => {
                                 </div>
 
                                 <div className="field">
-                                    <label className="label">Tag
+                                    <label className="label is-small">Tag
                                         <i
                                             className={`fas fa-wrench m-1 ${tagSetting
                                             ? 'fa-beat-fade'
@@ -153,7 +153,7 @@ const SidebarAddWord : React.FC < Props > = (props : Props) => {
                                 </div>
 
                                 {wordWarning && (
-                                    <article className="message is-danger">
+                                    <article className="message is-danger is-small">
                                         <div className="message-body">
                                             表格信息不完备。
                                         </div>
@@ -161,18 +161,18 @@ const SidebarAddWord : React.FC < Props > = (props : Props) => {
                                 )}
 
                                 {wordSaveResponse && (
-                                    <article className="message is-success">
+                                    <article className="message is-success is-small">
                                         <div className="message-body">
                                             词语已保存。
                                         </div>
                                     </article>
                                 )}
 
-                                <div className="field is-grouped">
+                                <div className="field is-grouped is-small">
                                     <div className="control">
                                         <button
                                             disabled={word === ''}
-                                            className="button is-link"
+                                            className="button is-link is-small"
                                             id="save-button"
                                             onClick={(event) => {
                                             event.preventDefault();

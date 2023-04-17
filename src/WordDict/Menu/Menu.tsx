@@ -16,6 +16,7 @@ type Props = {
 }
 
 export const Menu : React.FC < Props > = (props : Props) => {
+    const [menuVisible, setMenuVisible] = React.useState(false);
     const menuItems : MenuItem[] = [
         {
             label: '保存到本地文件',
@@ -54,15 +55,23 @@ export const Menu : React.FC < Props > = (props : Props) => {
             className="navbar is-info is-fixed-top"
             role="navigation"
             aria-label="main navigation">
-            <div className="navbar-menu">
+            <div className="navbar-brand">
+                <a
+                    className="navbar-item"
+                    href='https://github.com/bananaeat/WordStoreReact'
+                    target="_blank">
+                    <img src={require('../../icon_min.png')} alt="猫" width="32" height="32"/>
+                    猫猫词库
+                </a>
+                <a role="button" className="navbar-burger" aria-label="menu" aria-expanded="false" onClick={() => {setMenuVisible(!menuVisible)}}
+                onBlur={() => setMenuVisible(false)}>
+                    <span aria-hidden="true"></span>
+                    <span aria-hidden="true"></span>
+                    <span aria-hidden="true"></span>
+                </a>
+            </div>
+            <div className={`navbar-menu ${menuVisible ? 'is-active' : ''}`}>
                 <div className="navbar-start">
-                    <a
-                        className="navbar-item"
-                        href='https://github.com/bananaeat/WordStoreReact'
-                        target="_blank">
-                        <img src='../../icon_min.png' alt="猫" width="32" height="32"/>
-                        猫猫词库
-                    </a>
                     {menuItems.map((item, index) => (
                         <a
                             key={index}

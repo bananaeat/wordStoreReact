@@ -65,7 +65,7 @@ const WordList : React.FC < Props > = (props : Props) => {
 
     return (
         <div
-            className="WordList column is-three-quarters-mobile is-three-quarters-tablet is-two-thirds-desktop is-two-thirds-widescreen is-three-quarters-fullhd">
+            className="WordList column is-two-thirds-desktop is-two-thirds-widescreen is-three-quarters-fullhd">
             <div className="container">
                 <div className="panel">
                     <p className="panel-heading">

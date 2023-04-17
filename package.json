@@ -64,7 +64,7 @@
     },
     "scripts": {
         "start": "node scripts/start.js",
-        "build": "node scripts/build.js && cd build && ren index.html app.html && cd ..",
+        "build": "node scripts/build.js",
         "test": "node scripts/test.js --env=jsdom",
         "eject": "node eject",
         "predeploy": "npm run build",
