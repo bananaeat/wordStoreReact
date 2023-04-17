@@ -7,23 +7,50 @@ import {wordData} from '../Sidebar/SidebarAddWord';
 import {tagData} from '../Sidebar/SidebarAddTag';
 import WordLine from './WordLine';
 import WordListPagination from './WordListPagination';
+import WordListAI from './WordListAI';
+import { nanoid } from 'nanoid';
 
 type Props = {
-    updateData: (key : string, wordData : wordData[]) => void;
+    updateData: (key : string, data: any) => void;
     wordData: wordData[];
     tagData: tagData[];
     currentPage: number;
     setCurrentPage: (page : number) => void;
 }
 
+export type Word = { word: string, definition: string, tags: tagData[] }
+
 const WordList : React.FC < Props > = (props : Props) => {
     const [searchText,
         setSearchText] = React.useState('');
+
+    const [AIModal,
+        setAIModal] = React.useState(false);
 
     const currentPage = props.currentPage;
     const setCurrentPage = props.setCurrentPage;
 
     const maxPerPage = 15;
+
+    const addWords = async (wordDict : Word[]) => {
+        var words = loadFromLocal('wordDict');
+        if (!words) {
+            words = [];
+        }
+        words = words.concat(wordDict.map((word : Word) => {
+            if (word.definition === '') {
+                word.definition = 'Empty definition';
+            }
+            return {
+                id: nanoid(),
+                name: word.word,
+                definition: word.definition,
+                tags: word.tags
+            };
+        }));
+        props.updateData('wordDict', words);
+        setCurrentPage(1);
+    }
 
     const onDeleteWord : (wordID : string) => Promise < boolean > = async(wordID) => {
         try {
@@ -66,12 +93,24 @@ const WordList : React.FC < Props > = (props : Props) => {
     return (
         <div
             className="WordList column is-two-thirds-desktop is-two-thirds-widescreen is-three-quarters-fullhd">
+            <WordListAI AIModalVisible={AIModal} setAIModalVisible={setAIModal} addWords={addWords} tags={props.tagData}/>
             <div className="container">
                 <div className="panel">
                     <p className="panel-heading">
-                        <div className='is-flex'>
-                            <i className="fa-solid fa-cat fa-bounce"></i>
-                            词库
+                        <div className='is-flex is-justify-content-space-between'>
+                            <span>
+                                <i className="fa-solid fa-cat fa-bounce"></i>
+                                词库
+                            </span>
+                            <span>
+                                <i
+                                    className="fa-solid fa-wand-magic-sparkles"
+                                    style={{
+                                    color: "#9e10ea"
+                                }}
+                                    onClick={() => setAIModal(true)}>AI工具</i>
+                            </span>
+
                         </div>
                     </p>
                     <div className="panel-block">

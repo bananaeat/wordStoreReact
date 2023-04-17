@@ -58,136 +58,134 @@ const SidebarAddWord : React.FC < Props > = (props : Props) => {
     return (
         <div className="SidebarAddWord">
             <div className="has-background-light">
-                <div className="container">
-                    <div className="message is-small">
-                        <h1 className="message-header">添加词语</h1>
-                        <div className="message-body padding-0-mobile">
-                            <form id="add-word-form">
-                                <div className="field">
-                                    <label className="label is-small">词语</label>
-                                    <div className="control">
-                                        <input
-                                            className="input is-primary is-small"
-                                            type="text"
-                                            placeholder="词语"
-                                            id="word"
-                                            onChange={event => setWord(event.target.value)}
-                                            onBlur={onWordBlur}/> {wordWarning && (
-                                            <p className="help is-danger">未填写词语名称。</p>
-                                        )}
-                                    </div>
+                <div className="message is-small">
+                    <h1 className="message-header">添加词语</h1>
+                    <div className="message-body padding-0-mobile">
+                        <form id="add-word-form">
+                            <div className="field">
+                                <label className="label is-small">词语</label>
+                                <div className="control">
+                                    <input
+                                        className="input is-primary is-small"
+                                        type="text"
+                                        placeholder="词语"
+                                        id="word"
+                                        onChange={event => setWord(event.target.value)}
+                                        onBlur={onWordBlur}/> {wordWarning && (
+                                        <p className="help is-danger">未填写词语名称。</p>
+                                    )}
                                 </div>
+                            </div>
 
-                                <div className="field">
-                                    <label className="label is-small">定义</label>
-                                    <div className="control">
-                                        <input
-                                            className="input is-info is-small"
-                                            type="text"
-                                            placeholder="定义"
-                                            id="definition"
-                                            onChange={(event) => {
-                                            setDefinition(event.target.value);
-                                        }}/>
-                                    </div>
+                            <div className="field">
+                                <label className="label is-small">定义</label>
+                                <div className="control">
+                                    <input
+                                        className="input is-info is-small"
+                                        type="text"
+                                        placeholder="定义"
+                                        id="definition"
+                                        onChange={(event) => {
+                                        setDefinition(event.target.value);
+                                    }}/>
                                 </div>
+                            </div>
 
-                                <div className="field">
-                                    <label className="label is-small">Tag
-                                        <i
-                                            className={`fas fa-wrench m-1 ${tagSetting
-                                            ? 'fa-beat-fade'
-                                            : ''}`}
-                                            aria-hidden="true"
-                                            onClick={() => setTagSetting(!tagSetting)}></i>
-                                        <i
-                                            className={`fas fa-add m-1`}
-                                            aria-hidden="true"
-                                            onClick={() => setTagAdding(!tagAdding)}></i>
-                                    </label>
-                                    <div
-                                        className={`modal ${tagAdding
-                                        ? 'is-active'
+                            <div className="field">
+                                <label className="label is-small">Tag
+                                    <i
+                                        className={`fas fa-wrench m-1 ${tagSetting
+                                        ? 'fa-beat-fade'
                                         : ''}`}
+                                        aria-hidden="true"
+                                        onClick={() => setTagSetting(!tagSetting)}></i>
+                                    <i
+                                        className={`fas fa-add m-1`}
+                                        aria-hidden="true"
+                                        onClick={() => setTagAdding(!tagAdding)}></i>
+                                </label>
+                                <div
+                                    className={`modal ${tagAdding
+                                    ? 'is-active'
+                                    : ''}`}
+                                    style={{
+                                    overflow: 'visible'
+                                }}>
+                                    <div className="modal-background"></div>
+                                    <div
+                                        className="modal-content"
                                         style={{
                                         overflow: 'visible'
-                                    }}>
-                                        <div className="modal-background"></div>
-                                        <div
-                                            className="modal-content"
-                                            style={{
-                                            overflow: 'visible'
-                                        }}><SidebarAddTag onSave={props.onSaveTag} closeModal={() => setTagAdding(false)}/></div>
-                                        <button className="modal-close is-large" aria-label="close"></button>
-                                    </div>
-                                    <div className="field is-grouped is-grouped-multiline">
-                                        {props
-                                            .tagData
-                                            .map((tag) => (
-                                                <span className="control" key={tag.id}>
+                                    }}><SidebarAddTag onSave={props.onSaveTag} closeModal={() => setTagAdding(false)}/></div>
+                                    <button className="modal-close is-large" aria-label="close"></button>
+                                </div>
+                                <div className="field is-grouped is-grouped-multiline">
+                                    {props
+                                        .tagData
+                                        .map((tag) => (
+                                            <span className="control" key={tag.id}>
+                                                <span
+                                                    className={`tags has-addons m-1`}
+                                                    onClick={() => {
+                                                    if (selectedTags.some(t => t.id == tag.id)) {
+                                                        setSelectedTags(selectedTags.filter((t) => t.id !== tag.id));
+                                                    } else {
+                                                        setSelectedTags([
+                                                            ...selectedTags,
+                                                            tag
+                                                        ]);
+                                                    }
+                                                }}>
                                                     <span
-                                                        className={`tags has-addons m-1`}
-                                                        onClick={() => {
-                                                        if (selectedTags.some(t => t.id == tag.id)) {
+                                                        className={`tag is-small is-${tag
+                                                        .colour} ${selectedTags
+                                                        .some(t => t.id == tag.id)
+                                                        ? ''
+                                                        : 'is-light'}`}>{tag.name}</span>
+                                                    {tagSetting && (
+                                                        <a
+                                                            className="tag is-delete is-danger"
+                                                            onClick={(event) => {
+                                                            event.stopPropagation();
                                                             setSelectedTags(selectedTags.filter((t) => t.id !== tag.id));
-                                                        } else {
-                                                            setSelectedTags([
-                                                                ...selectedTags,
-                                                                tag
-                                                            ]);
-                                                        }
-                                                    }}>
-                                                        <span
-                                                            className={`tag is-small is-${tag
-                                                            .colour} ${selectedTags
-                                                            .some(t => t.id == tag.id)
-                                                            ? ''
-                                                            : 'is-light'}`}>{tag.name}</span>
-                                                        {tagSetting && (
-                                                            <a
-                                                                className="tag is-delete is-danger"
-                                                                onClick={(event) => {
-                                                                event.stopPropagation();
-                                                                setSelectedTags(selectedTags.filter((t) => t.id !== tag.id));
-                                                                props.onDeleteTag(tag.id);
-                                                            }}></a>
-                                                        )}
-                                                    </span>
+                                                            props.onDeleteTag(tag.id);
+                                                        }}></a>
+                                                    )}
                                                 </span>
-                                            ))}
-                                    </div>
+                                            </span>
+                                        ))}
                                 </div>
+                            </div>
 
-                                {wordWarning && (
-                                    <article className="message is-danger is-small">
-                                        <div className="message-body">
-                                            表格信息不完备。
-                                        </div>
-                                    </article>
-                                )}
-
-                                {wordSaveResponse && (
-                                    <article className="message is-success is-small">
-                                        <div className="message-body">
-                                            词语已保存。
-                                        </div>
-                                    </article>
-                                )}
-
-                                <div className="field is-grouped">
-                                    <div className="control">
-                                        <button
-                                            disabled={word === ''}
-                                            className="button is-link is-small"
-                                            id="save-button"
-                                            onClick={(event) => {
-                                            event.preventDefault();
-                                            onSave();
-                                        }}>保存</button>
+                            {wordWarning && (
+                                <article className="message is-danger is-small">
+                                    <div className="message-body">
+                                        表格信息不完备。
                                     </div>
+                                </article>
+                            )}
+
+                            {wordSaveResponse && (
+                                <article className="message is-success is-small">
+                                    <div className="message-body">
+                                        词语已保存。
+                                    </div>
+                                </article>
+                            )}
+
+                            <div className="field is-grouped">
+                                <div className="control">
+                                    <button
+                                        disabled={word === ''}
+                                        className="button is-link is-small"
+                                        id="save-button"
+                                        onClick={(event) => {
+                                        event.preventDefault();
+                                        onSave();
+                                    }}>保存</button>
                                 </div>
-                            </form>
-                        </div>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
