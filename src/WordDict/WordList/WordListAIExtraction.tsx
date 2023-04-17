@@ -29,18 +29,18 @@ const tooltips = {
 
 const wordExtraction = async(text : string, openai_key : string, translationMode : string, tags : tagData[], model : string) => {
     const generatePrompt = {
-        'English': `The user will send you a piece of text. You need to identify proper nouns or important conceptual vocabulary from it, and list them with their definitions. Definitions should be brief, ideally within one sentence. The format you list must be one word per line, with the word and its definition separated by a hyphen. For example:
+        'English': `The user will send you a piece of text. You need to identify proper nouns or important conceptual vocabulary from it, and list them with their definitions. Definitions should be brief, ideally within one sentence. The format you list must be one word per line, with the word and its definition separated by a underline. For example:
 
-        Economics-The social science studying the relationships between goods and services
-        Mathematics-The study of numbers and abstract concepts
+        Economics_The social science studying the relationships between goods and services
+        Mathematics_The study of numbers and abstract concepts
     
         Do not output any other content.`,
-        'Chinese': `用户将向您发送一段文本。您需要从其中识别出名词或重要的概念性词汇，并将其与其定义一起列出。定义应该简洁，理想情况下应该在一句话内。您列出的格式必须是每行一个单词，单词与其定义之间用hyphen分隔。例如：
+        'Chinese': `用户将向您发送一段文本。您需要从其中识别出名词或重要的概念性词汇，并将其与其定义一起列出。定义应该简洁，理想情况下应该在一句话内。您列出的格式必须是每行一个单词，单词与其定义之间用下划线分隔。例如：
 
-        经济学-研究商品和服务之间关系的社会科学
-        数学-研究数字和抽象概念的学科
+        经济学（Economics)_研究商品和服务之间关系的社会科学
+        数学（Mathematics)_研究数字和抽象概念的学科
 
-        将释义翻译成中文，但不要翻译单词本身。
+        翻译成中文，但保留原语言的单词本身。
     
         不要输出其他内容。`
     }
@@ -67,14 +67,14 @@ const wordExtraction = async(text : string, openai_key : string, translationMode
 
         用户输入：
             Text:
-            经济学-研究商品和服务之间关系的社会科学
-            数学-研究数字和抽象概念的学科
+            经济学（Economics)-研究商品和服务之间关系的社会科学
+            数学（Mathematics）-研究数字和抽象概念的学科
             Tags:
             学科, 社会科学, 科学
 
         您的输出：
-            经济学-学科, 社会科学
-            数学-学科, 科学
+            经济学（Economics）-学科, 社会科学
+            数学（Mathematics）-学科, 科学
         
         如果没有适当的标签，请从您的输出中省略单词。
         不要输出其他内容。`
@@ -111,10 +111,10 @@ const wordExtraction = async(text : string, openai_key : string, translationMode
 
     const data = dataString
         .split('\n')
-        .filter((line : string) => line.includes('-'))
+        .filter((line : string) => line.includes('_'))
         .map((line : string) => {
             const [word,
-                definition] = line.split('-');
+                definition] = line.split('_');
             return {word, definition}
         });
 
@@ -202,7 +202,7 @@ const WordListAIExtraction = (props : Props) => {
         setLoading] = React.useState(false);
 
     const [translationMode,
-        setTranslationMode] = React.useState('English');
+        setTranslationMode] = React.useState('Chinese');
 
     const [model,
         setModel] = React.useState('gpt-3.5-turbo');
