@@ -19,7 +19,7 @@ const Sidebar : React.FC < Props > = (props : Props) => {
                 wordDict = [];
             }
             if (wordData.definition === '') {
-                wordData.definition = '暂无定义';
+                wordData.definition = '暂无定义 No definition';
             }
             wordData.tags = wordData.tags.sort((a, b) => a.id.localeCompare(b.id));
             wordDict.push(wordData);
