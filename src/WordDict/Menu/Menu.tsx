@@ -1,6 +1,7 @@
 import React from 'react';
 import {wordData} from '../Sidebar/SidebarAddWord';
 import {tagData} from '../Sidebar/SidebarAddTag';
+import assert from 'assert';
 
 interface MenuItem {
     label : string;
@@ -16,7 +17,8 @@ type Props = {
 }
 
 export const Menu : React.FC < Props > = (props : Props) => {
-    const [menuVisible, setMenuVisible] = React.useState(false);
+    const [menuVisible,
+        setMenuVisible] = React.useState(false);
     const menuItems : MenuItem[] = [
         {
             label: '保存到本地文件 Save to local file',
@@ -30,17 +32,33 @@ export const Menu : React.FC < Props > = (props : Props) => {
                 const blob = new Blob([fileData], {type: "application/json;encoding=utf-8"});
                 const url = URL.createObjectURL(blob);
                 const link = document.createElement("a");
-                link.download = "user-info.json";
+                link.download = "word_store.json";
                 link.href = url;
                 link.click();
             }
         }, {
             label: '读取本地文件 Read local file',
             onClick: async() => {
-                const data = {
-                    words: [],
-                    tags: []
-                }
+                // Upload local file
+                const data = await new Promise < any > ((resolve, reject) => {
+                    const input = document.createElement('input');
+                    input.type = 'file';
+                    input.accept = '.json';
+                    input.onchange = (e) => {
+                        const target = e.target as HTMLInputElement;
+                        if (target && target.files) {
+                            const file = target.files[0];
+                            const reader = new FileReader();
+                            reader.onload = (e) => {
+                                const data = JSON.parse(e.target
+                                    ?.result as string);
+                                resolve(data);
+                            };
+                            reader.readAsText(file);
+                        }
+                    };
+                    input.click();
+                });
                 if (data) {
                     props.setWordData(data.words);
                     props.setTagData(data.tags);
@@ -63,14 +81,24 @@ export const Menu : React.FC < Props > = (props : Props) => {
                     <img src={require('../../icon_min.png')} alt="猫" width="32" height="32"/>
                     猫猫词库 Neko Word Store
                 </a>
-                <a role="button" className="navbar-burger" aria-label="menu" aria-expanded="false" onClick={() => {setMenuVisible(!menuVisible)}}
-                onBlur={() => setMenuVisible(false)}>
+                <a
+                    role="button"
+                    className="navbar-burger"
+                    aria-label="menu"
+                    aria-expanded="false"
+                    onClick={() => {
+                    setMenuVisible(!menuVisible)
+                }}
+                    onBlur={() => setMenuVisible(false)}>
                     <span aria-hidden="true"></span>
                     <span aria-hidden="true"></span>
                     <span aria-hidden="true"></span>
                 </a>
             </div>
-            <div className={`navbar-menu ${menuVisible ? 'is-active' : ''}`}>
+            <div
+                className={`navbar-menu ${menuVisible
+                ? 'is-active'
+                : ''}`}>
                 <div className="navbar-start">
                     {menuItems.map((item, index) => (
                         <a
