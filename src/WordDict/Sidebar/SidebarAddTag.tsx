@@ -34,8 +34,6 @@ const SidebarAddTag : React.FC < Props > = (props : Props) => {
         setColour] = useState(""); // definition
     const [tagWarning,
         setTagWarning] = useState(false); // word warning
-    const [tagSaveResponse,
-        setTagSaveResponse] = useState(false); // word save response
     const [isDropdownOpen,
         setIsDropdownOpen] = useState(false);
 
@@ -56,7 +54,7 @@ const SidebarAddTag : React.FC < Props > = (props : Props) => {
             setTagWarning(true);
         } else {
             setTagWarning(false);
-            setTagSaveResponse(await props.onSave({id: nanoid(), name: tag, colour}));
+            await props.onSave({id: nanoid(), name: tag, colour});
         }
     };
 
@@ -65,7 +63,7 @@ const SidebarAddTag : React.FC < Props > = (props : Props) => {
             <div className="has-background-light">
                 <div className="container">
                     <div className="message">
-                        <h1 className="message-header">创建新Tag<button
+                        <h1 className="message-header">创建新Tag (Create new tag)<button
                             className="delete"
                             aria-label="delete"
                             onClick={(e) => {
@@ -75,7 +73,7 @@ const SidebarAddTag : React.FC < Props > = (props : Props) => {
                         <div className="message-body">
                             <form id="add-tag-form">
                                 <div className="field">
-                                    <div className="label">Tag名称</div>
+                                    <div className="label">Tag名称 Tag Name</div>
                                     <div className="control">
                                         <input
                                             className="input is-primary"
@@ -84,13 +82,13 @@ const SidebarAddTag : React.FC < Props > = (props : Props) => {
                                             id="word"
                                             onChange={event => setTag(event.target.value)}
                                             onBlur={onWordBlur}/> {tagWarning && (
-                                            <p className="help is-danger">未填写Tag名称。</p>
+                                            <p className="help is-danger">未填写Tag名称 Tag name required</p>
                                         )}
                                     </div>
                                 </div>
 
                                 <div className="field">
-                                    <label className="label">选择颜色</label>
+                                    <label className="label">选择颜色 Choose Colour</label>
                                     <div className='control dropdown is-active'>
                                         <div className="dropdown-trigger">
                                             <button
@@ -132,22 +130,6 @@ const SidebarAddTag : React.FC < Props > = (props : Props) => {
                                     </div>
                                 </div>
 
-                                {tagWarning && (
-                                    <article className="message is-danger">
-                                        <div className="message-body">
-                                            Tag信息不完整。
-                                        </div>
-                                    </article>
-                                )}
-
-                                {tagSaveResponse && (
-                                    <article className="message is-success">
-                                        <div className="message-body">
-                                            Tag已创建。
-                                        </div>
-                                    </article>
-                                )}
-
                                 <div className="field is-grouped">
                                     <div className="control">
                                         <button
@@ -158,14 +140,14 @@ const SidebarAddTag : React.FC < Props > = (props : Props) => {
                                             event.preventDefault();
                                             onSave();
                                             props.closeModal();
-                                        }}>创建</button>
+                                        }}>创建 Create</button>
                                         <button
                                             className="button is-light"
                                             id="cancel-button"
                                             onClick={(event) => {
                                             event.preventDefault();
                                             props.closeModal();
-                                        }}>取消</button>
+                                        }}>取消 Cancel</button>
                                     </div>
                                 </div>
                             </form>

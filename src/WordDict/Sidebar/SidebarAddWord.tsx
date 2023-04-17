@@ -59,11 +59,11 @@ const SidebarAddWord : React.FC < Props > = (props : Props) => {
         <div className="SidebarAddWord">
             <div className="has-background-light">
                 <div className="message is-small">
-                    <h1 className="message-header">添加词语</h1>
+                    <h1 className="message-header">添加词语 Add Word</h1>
                     <div className="message-body padding-0-mobile">
                         <form id="add-word-form">
                             <div className="field">
-                                <label className="label is-small">词语</label>
+                                <label className="label is-small">词语 Word</label>
                                 <div className="control">
                                     <input
                                         className="input is-primary is-small"
@@ -72,13 +72,13 @@ const SidebarAddWord : React.FC < Props > = (props : Props) => {
                                         id="word"
                                         onChange={event => setWord(event.target.value)}
                                         onBlur={onWordBlur}/> {wordWarning && (
-                                        <p className="help is-danger">未填写词语名称。</p>
+                                        <p className="help is-danger">未填写词语名称 Word name required</p>
                                     )}
                                 </div>
                             </div>
 
                             <div className="field">
-                                <label className="label is-small">定义</label>
+                                <label className="label is-small">定义 Definition</label>
                                 <div className="control">
                                     <input
                                         className="input is-info is-small"
@@ -160,7 +160,7 @@ const SidebarAddWord : React.FC < Props > = (props : Props) => {
                             {wordWarning && (
                                 <article className="message is-danger is-small">
                                     <div className="message-body">
-                                        表格信息不完备。
+                                        表格信息不完备。Form not complete.
                                     </div>
                                 </article>
                             )}
@@ -168,7 +168,7 @@ const SidebarAddWord : React.FC < Props > = (props : Props) => {
                             {wordSaveResponse && (
                                 <article className="message is-success is-small">
                                     <div className="message-body">
-                                        词语已保存。
+                                        词语已保存。Word sved.
                                     </div>
                                 </article>
                             )}
@@ -182,7 +182,7 @@ const SidebarAddWord : React.FC < Props > = (props : Props) => {
                                         onClick={(event) => {
                                         event.preventDefault();
                                         onSave();
-                                    }}>保存</button>
+                                    }}>保存 Save</button>
                                 </div>
                             </div>
                         </form>

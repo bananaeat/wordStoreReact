@@ -23,7 +23,7 @@ const WordListAI = (props : Props) => {
             <div className="modal-background"></div>
             <div className="modal-card">
                 <header className="modal-card-head">
-                    <p className="modal-card-title">AI关键词提取</p>
+                    <p className="modal-card-title">AI关键词提取 AI Keyword Extraction</p>
                     <button
                         className="delete"
                         aria-label="close"

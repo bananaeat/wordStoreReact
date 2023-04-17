@@ -19,7 +19,7 @@ export const Menu : React.FC < Props > = (props : Props) => {
     const [menuVisible, setMenuVisible] = React.useState(false);
     const menuItems : MenuItem[] = [
         {
-            label: '保存到本地文件',
+            label: '保存到本地文件 Save to local file',
             onClick: async() => {
                 const dataToSave = {
                     words: props.wordData,
@@ -35,7 +35,7 @@ export const Menu : React.FC < Props > = (props : Props) => {
                 link.click();
             }
         }, {
-            label: '读取本地文件',
+            label: '读取本地文件 Read local file',
             onClick: async() => {
                 const data = {
                     words: [],
@@ -61,7 +61,7 @@ export const Menu : React.FC < Props > = (props : Props) => {
                     href='https://github.com/bananaeat/WordStoreReact'
                     target="_blank">
                     <img src={require('../../icon_min.png')} alt="猫" width="32" height="32"/>
-                    猫猫词库
+                    猫猫词库 Neko Word Store
                 </a>
                 <a role="button" className="navbar-burger" aria-label="menu" aria-expanded="false" onClick={() => {setMenuVisible(!menuVisible)}}
                 onBlur={() => setMenuVisible(false)}>

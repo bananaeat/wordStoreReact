@@ -100,7 +100,7 @@ const WordList : React.FC < Props > = (props : Props) => {
                         <div className='is-flex is-justify-content-space-between'>
                             <span>
                                 <i className="fa-solid fa-cat fa-bounce"></i>
-                                词库
+                                词库 Word Store
                             </span>
                             <span>
                                 <i
@@ -108,7 +108,7 @@ const WordList : React.FC < Props > = (props : Props) => {
                                     style={{
                                     color: "#9e10ea"
                                 }}
-                                    onClick={() => setAIModal(true)}>AI工具</i>
+                                    onClick={() => setAIModal(true)}>AI tools</i>
                             </span>
 
                         </div>

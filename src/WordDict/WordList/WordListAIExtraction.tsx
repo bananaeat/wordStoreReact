@@ -203,7 +203,7 @@ const WordListAIExtraction = (props : Props) => {
             </div>
 
             <div className="field">
-                <label className="label">文本内容</label>
+                <label className="label">文本内容 Text content</label>
                 <div className="control">
                     <textarea
                         className="textarea"
@@ -215,7 +215,7 @@ const WordListAIExtraction = (props : Props) => {
 
             {/* 翻译模式 */}
             <div className='field'>
-                <label className='label'>翻译模式</label>
+                <label className='label'>翻译模式 Translation mode</label>
                 <div className='control'>
                     <div className='select'>
                         <select onChange={(e) => setTranslationMode(e.currentTarget.value)}>
@@ -232,10 +232,10 @@ const WordListAIExtraction = (props : Props) => {
                         className={`button is-link ${loading
                         ? 'is-loading'
                         : ''}`}
-                        onClick={onSubmit}>提交</button>
+                        onClick={onSubmit}>提交 Submit</button>
                 </div>
                 <div className="control">
-                    <button className="button is-link is-light" onClick={props.hideModal}>取消</button>
+                    <button className="button is-link is-light" onClick={props.hideModal}>取消 Cancel</button>
                 </div>
             </div>
         </div>
