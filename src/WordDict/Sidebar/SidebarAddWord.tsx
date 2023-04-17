@@ -64,7 +64,7 @@ const SidebarAddWord : React.FC < Props > = (props : Props) => {
                         <div className="message-body padding-0-mobile">
                             <form id="add-word-form">
                                 <div className="field">
-                                    <label className="label">词语</label>
+                                    <label className="label is-small">词语</label>
                                     <div className="control">
                                         <input
                                             className="input is-primary is-small"
@@ -82,7 +82,7 @@ const SidebarAddWord : React.FC < Props > = (props : Props) => {
                                     <label className="label is-small">定义</label>
                                     <div className="control">
                                         <input
-                                            className="textarea is-info is-small"
+                                            className="input is-info is-small"
                                             type="text"
                                             placeholder="定义"
                                             id="definition"
@@ -105,12 +105,18 @@ const SidebarAddWord : React.FC < Props > = (props : Props) => {
                                             aria-hidden="true"
                                             onClick={() => setTagAdding(!tagAdding)}></i>
                                     </label>
-                                    <div className={`modal ${tagAdding ? 'is-active' : ''}`} style={{
-                                        overflow: 'visible',
+                                    <div
+                                        className={`modal ${tagAdding
+                                        ? 'is-active'
+                                        : ''}`}
+                                        style={{
+                                        overflow: 'visible'
                                     }}>
                                         <div className="modal-background"></div>
-                                        <div className="modal-content" style={{
-                                            overflow: 'visible',
+                                        <div
+                                            className="modal-content"
+                                            style={{
+                                            overflow: 'visible'
                                         }}><SidebarAddTag onSave={props.onSaveTag} closeModal={() => setTagAdding(false)}/></div>
                                         <button className="modal-close is-large" aria-label="close"></button>
                                     </div>
@@ -132,7 +138,7 @@ const SidebarAddWord : React.FC < Props > = (props : Props) => {
                                                         }
                                                     }}>
                                                         <span
-                                                            className={`tag is-${tag
+                                                            className={`tag is-small is-${tag
                                                             .colour} ${selectedTags
                                                             .some(t => t.id == tag.id)
                                                             ? ''
@@ -168,7 +174,7 @@ const SidebarAddWord : React.FC < Props > = (props : Props) => {
                                     </article>
                                 )}
 
-                                <div className="field is-grouped is-small">
+                                <div className="field is-grouped">
                                     <div className="control">
                                         <button
                                             disabled={word === ''}
