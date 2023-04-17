@@ -14,9 +14,9 @@ type Props = {
 }
 
 const tooltips = {
-    translation: `<p> When your input text's language differs from the chosen language, AI will translate it. </p>
+    translation: `<p> When your input text's language differs from the chosen language, AI will translate it. GPT-3.5 sometimes fail to translate. </p>
     <p> This may result in a lower accuracy. </p>
-    <p> 当您的输入文本的语言与所选语言不同时，AI将对其进行翻译。 </p>
+    <p> 当您的输入文本的语言与所选语言不同时，AI将对其进行翻译。GPT-3.5有时无法有效翻译。 </p>
     <p> 这可能会导致准确性降低。 </p>
                  
     <p> If you want to retain the original text, please choose the same language as your input text. </p>
@@ -270,8 +270,8 @@ const WordListAIExtraction = (props : Props) => {
                 <div className='control'>
                     <div className='select'>
                         <select onChange={(e) => setTranslationMode(e.currentTarget.value)}>
-                            <option>中文</option>
-                            <option>English</option>
+                            <option value={'中文'}>中文</option>
+                            <option value={'English'}>English</option>
                         </select>
                     </div>
                 </div>
