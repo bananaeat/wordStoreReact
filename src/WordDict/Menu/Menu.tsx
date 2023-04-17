@@ -26,12 +26,21 @@ export const Menu : React.FC < Props > = (props : Props) => {
                     tags: props.tagData
                 };
 
-                console.log(dataToSave);
+                const fileData = JSON.stringify(dataToSave);
+                const blob = new Blob([fileData], {type: "application/json;encoding=utf-8"});
+                const url = URL.createObjectURL(blob);
+                const link = document.createElement("a");
+                link.download = "user-info.json";
+                link.href = url;
+                link.click();
             }
         }, {
             label: '读取本地文件',
             onClick: async() => {
-                const data = {words: [], tags: []}
+                const data = {
+                    words: [],
+                    tags: []
+                }
                 if (data) {
                     props.setWordData(data.words);
                     props.setTagData(data.tags);
@@ -51,8 +60,7 @@ export const Menu : React.FC < Props > = (props : Props) => {
                     <a
                         className="navbar-item"
                         href='https://github.com/bananaeat/WordStore'
-                        target="_blank"
-                    >
+                        target="_blank">
                         <img src={icon} alt="猫" width="32" height="32"/>
                         猫猫词库
                     </a>
