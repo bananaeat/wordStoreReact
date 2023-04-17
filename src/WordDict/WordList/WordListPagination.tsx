@@ -39,7 +39,7 @@ const WordListPagination = (props : Props) => {
                                 length: props.numberOfPages
                             }, (_, index) => index + 1).map((page : number) => {
                                 return (
-                                    <li>
+                                    <li key={`pagination-${page}`}>
                                         <a
                                             className={`pagination-link ${props.currentPage == page
                                             ? 'is-current'
@@ -78,7 +78,7 @@ const WordListPagination = (props : Props) => {
                                 .slice(Math.max(props.currentPage - halfPageRange, 0), Math.min(props.currentPage + pageRange - halfPageRange - 1, props.numberOfPages))
                                 .map((page : number) => {
                                     return (
-                                        <li>
+                                        <li key={`pagination-${page}`}>
                                             <a
                                                 className={`pagination-link ${props.currentPage == page
                                                 ? 'is-current'

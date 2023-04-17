@@ -1,7 +1,7 @@
 import React from 'react';
 import {wordData} from '../Sidebar/SidebarAddWord';
 import {tagData} from '../Sidebar/SidebarAddTag';
-import assert from 'assert';
+import { loadFromLocal } from '../StorageUtils/Utils';
 
 interface MenuItem {
     label : string;
@@ -60,7 +60,16 @@ export const Menu : React.FC < Props > = (props : Props) => {
                     input.click();
                 });
                 if (data) {
+                    const words = loadFromLocal('wordDict');
+                    if (words) {
+                        data.words = data.words.filter((word : wordData) => !words.find((w : wordData) => w.id === word.id)).concat(words);
+                    }
                     props.setWordData(data.words);
+
+                    const tags = loadFromLocal('tagDict');
+                    if (tags) {
+                        data.tags = data.tags.filter((tag : tagData) => !tags.find((t : tagData) => t.id === tag.id)).concat(tags);
+                    }
                     props.setTagData(data.tags);
                     props.setCurrentPage(1);
                 }
