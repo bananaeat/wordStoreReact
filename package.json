@@ -94,7 +94,7 @@
         "bulma": "^0.9.4",
         "gh-pages": "^5.0.0"
     },
-    "homepage": "https://bananaeat.github.io/wordStore",
+    "homepage": "https://bananaeat.github.io/wordStoreReact",
     "jest": {
         "roots": [
             "<rootDir>/src"

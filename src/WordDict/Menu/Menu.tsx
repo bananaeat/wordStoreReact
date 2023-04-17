@@ -58,7 +58,7 @@ export const Menu : React.FC < Props > = (props : Props) => {
                 <div className="navbar-start">
                     <a
                         className="navbar-item"
-                        href='https://github.com/bananaeat/WordStore'
+                        href='https://github.com/bananaeat/WordStoreReact'
                         target="_blank">
                         <img src='../../icon_min.png' alt="猫" width="32" height="32"/>
                         猫猫词库
