@@ -1,7 +1,8 @@
 import React from 'react';
 import {wordData} from '../Sidebar/SidebarAddWord';
 import {tagData} from '../Sidebar/SidebarAddTag';
-import { loadFromLocal } from '../StorageUtils/Utils';
+import {loadFromLocal} from '../StorageUtils/Utils';
+import ReactMarkdown from 'react-markdown'
 
 interface MenuItem {
     label : string;
@@ -19,6 +20,10 @@ type Props = {
 export const Menu : React.FC < Props > = (props : Props) => {
     const [menuVisible,
         setMenuVisible] = React.useState(false);
+
+    const [aboutVisible,
+        setAboutVisible] = React.useState(false);
+
     const menuItems : MenuItem[] = [
         {
             label: '保存到本地文件 Save to local file',
@@ -62,22 +67,33 @@ export const Menu : React.FC < Props > = (props : Props) => {
                 if (data) {
                     const words = loadFromLocal('wordDict');
                     if (words) {
-                        data.words = data.words.filter((word : wordData) => !words.find((w : wordData) => w.id === word.id)).concat(words);
+                        data.words = data
+                            .words
+                            .filter((word : wordData) => !words.find((w : wordData) => w.id === word.id))
+                            .concat(words);
                     }
                     props.setWordData(data.words);
 
                     const tags = loadFromLocal('tagDict');
                     if (tags) {
-                        data.tags = data.tags.filter((tag : tagData) => !tags.find((t : tagData) => t.id === tag.id)).concat(tags);
+                        data.tags = data
+                            .tags
+                            .filter((tag : tagData) => !tags.find((t : tagData) => t.id === tag.id))
+                            .concat(tags);
                     }
                     props.setTagData(data.tags);
                     props.setCurrentPage(1);
                 }
             }
-        },{
+        }, {
             label: '帮我买猫粮 Buy me catfood',
             onClick: async() => {
                 window.open('https://www.patreon.com/CausalityZ', '_blank');
+            }
+        }, {
+            label: '关于/帮助 About/Help',
+            onClick: async() => {
+                setAboutVisible(true);
             }
         }
     ];
@@ -125,6 +141,39 @@ export const Menu : React.FC < Props > = (props : Props) => {
                             {item.label}
                         </a>
                     ))}
+                </div>
+            </div>
+            <div
+                className={`modal ${aboutVisible
+                ? 'is-active'
+                : ''}`}>
+                <div className="modal-background"></div>
+                <div className="modal-card">
+                    <header className="modal-card-head">
+                        <p className="modal-card-title">猫猫词库 Word Store v1.0.0</p>
+                        <button
+                            className="delete"
+                            aria-label="close"
+                            onClick={() => setAboutVisible(false)}></button>
+                    </header>
+                    <section className="modal-card-body has-text-dark markdown">
+                        <ReactMarkdown>{`
+## 关于 猫猫词库 / Word Store
+
+*by [Causality_Z](https://okjk.co/XH0sGt)*
+
+# 简介
+
+猫猫词库是一个词汇管理工具，可以帮助用户管理和查询专业词汇，同时提供词汇提取和释义功能。
+
+# 功能介绍
+
+* 词汇存储和查询：用户可以自定义创建专业词汇的词条/对应释意/内容说明，并设定Tag分类领域/属性，词条内容支持搜索查询；
+* 语段专业名词提取和释义：用户提供API后，可以使用「AI Tools」工具输入任意语段，此应用可自动提取该语段中包含的专有名词，并为所有名词建立翻译/自动释意词条/标记已有Tag；
+* 从文件到家读取词语列表：支持json格式保存； -支持移动设备和PC网页端，不同设备词汇暂时不互通。
+                            `}
+                        </ReactMarkdown>
+                    </section>
                 </div>
             </div>
         </nav>
