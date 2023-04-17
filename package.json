@@ -44,5 +44,6 @@
         "@types/file-saver": "^2.0.5",
         "bulma": "^0.9.4",
         "react-scripts": "^5.0.1"
-    }
+    },
+    "homepage": "https://bananaeat.github.io/wordStore"
 }
