@@ -74,6 +74,11 @@ export const Menu : React.FC < Props > = (props : Props) => {
                     props.setCurrentPage(1);
                 }
             }
+        },{
+            label: '帮我买猫粮 Buy me catfood',
+            onClick: async() => {
+                window.open('https://www.patreon.com/CausalityZ', '_blank');
+            }
         }
     ];
 
