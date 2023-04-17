@@ -3,7 +3,7 @@ import React from 'react';
 import 'bulma/css/bulma.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import {Word} from './WordList';
-import {load} from 'dotenv';
+import {Tooltip} from 'react-tooltip'
 import {tagData} from '../Sidebar/SidebarAddTag';
 const {Configuration, OpenAIApi} = require("openai");
 
@@ -13,7 +13,21 @@ type Props = {
     tags: tagData[];
 }
 
-const wordExtraction = async(text : string, openai_key : string, translationMode : string, tags : tagData[]) => {
+const tooltips = {
+    translation: `<p> When your input text's language differs from the chosen language, AI will translate it. </p>
+    <p> This may result in a lower accuracy. </p>
+    <p> 当您的输入文本的语言与所选语言不同时，AI将对其进行翻译。 </p>
+    <p> 这可能会导致准确性降低。 </p>
+                 
+    <p> If you want to retain the original text, please choose the same language as your input text. </p>
+    <p> 如果您想保留原始文本，请选择与您的输入文本相同的语言。 </p>`,
+    openaiKey: `<p> You need to provide your OpenAI API key to use this feature. </p>
+    <p> 您需要提供您的OpenAI API密钥才能使用此功能。 </p>`,
+    model: `<p> The model used to generate the output. </p>
+    <p> 用于生成输出的模型。 </p>`
+}
+
+const wordExtraction = async(text : string, openai_key : string, translationMode : string, tags : tagData[], model: string) => {
     const generatePrompt = {
         'English': `The user will send you a piece of text. You need to identify proper nouns or important conceptual vocabulary from it, and list them with their definitions. Definitions should be brief, ideally within one sentence. The format you list must be one word per line, with the word and its definition separated by a hyphen. For example:
 
@@ -74,7 +88,7 @@ const wordExtraction = async(text : string, openai_key : string, translationMode
         const openai = new OpenAIApi(configuration);
 
         const completion = await openai.createChatCompletion({
-            model: "gpt-3.5-turbo",
+            model: model,
             messages: [
                 {
                     role: "system",
@@ -83,7 +97,8 @@ const wordExtraction = async(text : string, openai_key : string, translationMode
                     role: "user",
                     content: text
                 }
-            ]
+            ],
+            temperature: 0,
         });
         dataString = completion.data.choices[0].message.content
     } catch (error) {
@@ -111,7 +126,7 @@ const wordExtraction = async(text : string, openai_key : string, translationMode
             const openai = new OpenAIApi(configuration);
 
             const completion = await openai.createChatCompletion({
-                model: "gpt-3.5-turbo",
+                model: model,
                 messages: [
                     {
                         role: "system",
@@ -125,7 +140,8 @@ const wordExtraction = async(text : string, openai_key : string, translationMode
                             .map(tag => tag.name)
                             .join(', ')}`
                     }
-                ]
+                ],
+                temperature: 0,
             });
             taggingString = completion.data.choices[0].message.content
         } catch (error) {
@@ -180,9 +196,12 @@ const WordListAIExtraction = (props : Props) => {
     const [translationMode,
         setTranslationMode] = React.useState('English');
 
+    const [model,
+        setModel] = React.useState('gpt-3.5-turbo');
+
     const onSubmit = async() => {
         setLoading(true);
-        const words = await wordExtraction(text, openaiKey, translationMode, props.tags);
+        const words = await wordExtraction(text, openaiKey, translationMode, props.tags, model);
         await props.addWords(words);
         setLoading(false);
         props.hideModal();
@@ -191,9 +210,20 @@ const WordListAIExtraction = (props : Props) => {
     return (
         <div>
             <div className="field">
-                <label className="label">OpenAI API Key <i className="fas fa-key"></i></label>
+                <label className="label">
+                    <i className="fas fa-key"></i>
+                    OpenAI API Key
+                    <span className='has-text-danger'>*</span>
+                    <i
+                        className="fas fa-circle-question"
+                        data-tooltip-id="openai-key-tooltip"
+                        data-tooltip-variant='info'
+                        data-tooltip-html={'<div>' + tooltips.openaiKey + '</div>'}></i>
+                    <Tooltip id="openai-key-tooltip"/>
+                </label>
                 <div className="control">
                     <input
+                        required
                         className="input"
                         type="text"
                         placeholder="sk-xxx"
@@ -213,9 +243,30 @@ const WordListAIExtraction = (props : Props) => {
                 </div>
             </div>
 
+            {/* 模型 */}
+            <div className='field'>
+                <label className='label'>模型 Model<i
+                    className="fas fa-circle-question"
+                    data-tooltip-id="model-tooltip"
+                    data-tooltip-variant='info'
+                    data-tooltip-html={'<div>' + tooltips.model + '</div>'}></i><Tooltip id="model-tooltip"/></label>
+                <div className='control'>
+                    <div className='select'>
+                        <select onChange={(e) => setModel(e.currentTarget.value)}>
+                            <option value="gpt-3.5-turbo">GPT-3.5-Turbo</option>
+                            <option value="gpt-4">GPT-4</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
             {/* 翻译模式 */}
             <div className='field'>
-                <label className='label'>翻译模式 Translation mode</label>
+                <label className='label'>翻译模式 Translation mode<i
+                    className="fas fa-circle-question"
+                    data-tooltip-id="translation-tooltip"
+                    data-tooltip-variant='info'
+                    data-tooltip-html={'<div>' + tooltips.translation + '</div>'}></i><Tooltip id="translation-tooltip"/></label>
                 <div className='control'>
                     <div className='select'>
                         <select onChange={(e) => setTranslationMode(e.currentTarget.value)}>

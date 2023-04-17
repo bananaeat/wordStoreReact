@@ -103,12 +103,11 @@ const WordList : React.FC < Props > = (props : Props) => {
                                 词库 Word Store
                             </span>
                             <span>
-                                <i
+                                <button className='button' onClick={() => setAIModal(true)}><i
                                     className="fa-solid fa-wand-magic-sparkles"
                                     style={{
                                     color: "#9e10ea"
-                                }}
-                                    onClick={() => setAIModal(true)}>AI tools</i>
+                                }}>AI tools</i></button>
                             </span>
 
                         </div>
