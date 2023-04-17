@@ -1,7 +1,6 @@
 import React from 'react';
 import {wordData} from '../Sidebar/SidebarAddWord';
 import {tagData} from '../Sidebar/SidebarAddTag';
-import icon from '../../icon_min.png'
 
 interface MenuItem {
     label : string;
@@ -61,7 +60,7 @@ export const Menu : React.FC < Props > = (props : Props) => {
                         className="navbar-item"
                         href='https://github.com/bananaeat/WordStore'
                         target="_blank">
-                        <img src={icon} alt="猫" width="32" height="32"/>
+                        <img src='../../icon_min.png' alt="猫" width="32" height="32"/>
                         猫猫词库
                     </a>
                     {menuItems.map((item, index) => (
