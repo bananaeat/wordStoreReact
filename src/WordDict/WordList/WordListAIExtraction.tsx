@@ -221,7 +221,7 @@ const WordListAIExtraction = (props : Props) => {
                 <label className="label">
                     <i className="fas fa-key"></i>
                     OpenAI API Key
-                    <span className='has-text-danger'>*</span>
+                    <span className='has-text-danger'>* </span>
                     <i
                         className="fas fa-circle-question"
                         data-tooltip-id="openai-key-tooltip"
@@ -253,7 +253,7 @@ const WordListAIExtraction = (props : Props) => {
 
             {/* 模型 */}
             <div className='field'>
-                <label className='label'>模型 Model<i
+                <label className='label'>模型 Model <i
                     className="fas fa-circle-question"
                     data-tooltip-id="model-tooltip"
                     data-tooltip-variant='info'
@@ -270,7 +270,7 @@ const WordListAIExtraction = (props : Props) => {
 
             {/* 翻译模式 */}
             <div className='field'>
-                <label className='label'>翻译模式 Translation mode<i
+                <label className='label'>翻译模式 Translation mode <i
                     className="fas fa-circle-question"
                     data-tooltip-id="translation-tooltip"
                     data-tooltip-variant='info'

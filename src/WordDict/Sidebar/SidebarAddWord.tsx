@@ -168,7 +168,7 @@ const SidebarAddWord : React.FC < Props > = (props : Props) => {
                             {wordSaveResponse && (
                                 <article className="message is-success is-small">
                                     <div className="message-body">
-                                        词语已保存。Word sved.
+                                        词语已保存。Word saved.
                                     </div>
                                 </article>
                             )}
