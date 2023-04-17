@@ -1,46 +1,21 @@
-# Getting Started with Create React App
+# Word Store / ![icon_min](https://user-images.githubusercontent.com/20946309/232350328-e2e4c18d-e8b3-4a93-99b2-d915165fbb83.png) 猫猫词库
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+<img width="1186" alt="image" src="https://user-images.githubusercontent.com/20946309/232350289-85e449b6-0166-49a0-a25a-8da757a8b26a.png">
 
-## Available Scripts
+用于存储词语/定义的迷你应用。已经发布第一版正式版。
 
-In the project directory, you can run:
+## 使用方法：
 
-### `npm start`
+### 选项一：
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+下载最新Release压缩包，解压缩后运行word_store.exe即可（因为本项目基于的electron框架内置了Chromium内核，压缩包大小较大）
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+### 选项二：
 
-### `npm test`
+首先将本目录克隆到本地：
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```git clone https://github.com/bananaeat/WordStore ```
 
-### `npm run build`
+打开命令行并进入文件夹，运行以下命令：
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+```npm start ```
