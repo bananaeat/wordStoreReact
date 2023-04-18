@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/wordStoreReact/static/css/main.eb962a66.css",
-    "main.js": "/wordStoreReact/static/js/main.5e7be18a.js",
+    "main.js": "/wordStoreReact/static/js/main.278e8989.js",
     "static/js/787.d0b6624b.chunk.js": "/wordStoreReact/static/js/787.d0b6624b.chunk.js",
     "static/media/fa-solid-900.ttf": "/wordStoreReact/static/media/fa-solid-900.4a2cd718d7031b732e76.ttf",
     "static/media/fa-brands-400.ttf": "/wordStoreReact/static/media/fa-brands-400.150de8eaa454d669c405.ttf",
@@ -14,11 +14,11 @@
     "static/media/fa-v4compatibility.woff2": "/wordStoreReact/static/media/fa-v4compatibility.68577e40f3e70067b5da.woff2",
     "index.html": "/wordStoreReact/index.html",
     "main.eb962a66.css.map": "/wordStoreReact/static/css/main.eb962a66.css.map",
-    "main.5e7be18a.js.map": "/wordStoreReact/static/js/main.5e7be18a.js.map",
+    "main.278e8989.js.map": "/wordStoreReact/static/js/main.278e8989.js.map",
     "787.d0b6624b.chunk.js.map": "/wordStoreReact/static/js/787.d0b6624b.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.eb962a66.css",
-    "static/js/main.5e7be18a.js"
+    "static/js/main.278e8989.js"
   ]
 }
