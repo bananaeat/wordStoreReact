@@ -105,7 +105,7 @@ const WordLine : React.FC < Props > = (props : Props) => {
                     overflow: 'hidden',
                     whiteSpace: 'nowrap',
                     textOverflow: 'ellipsis',
-                    maxWidth: '50%'
+                    maxWidth: '90%'
                 }}>
                     {!isEditingName
                         ? props.wordData.name
