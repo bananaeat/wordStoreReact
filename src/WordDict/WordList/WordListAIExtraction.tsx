@@ -234,7 +234,7 @@ const WordListAIExtraction = (props : Props) => {
                     <input
                         required
                         className="input"
-                        type="text"
+                        type="password"
                         placeholder="sk-xxx"
                         value={openaiKey}
                         onChange={(e) => setOpenAIKey(e.target.value)}/>
