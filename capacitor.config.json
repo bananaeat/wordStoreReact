@@ -1,0 +1,8 @@
+{
+    "appId": "io.ionic.wordStoreReact",
+    "appName": "wordStoreReact",
+    "bundledWebRuntime": false,
+    "npmClient": "npm",
+    "webDir": "build",
+    "cordova": {}
+  }
