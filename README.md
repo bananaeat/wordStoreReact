@@ -1,4 +1,4 @@
-![banner](https://user-images.githubusercontent.com/20946309/232640731-a1e244ba-7ac3-439e-8b32-3b16d0a836e4.png | width=640)
+<img width="640" alt="image" src="https://user-images.githubusercontent.com/20946309/232640731-a1e244ba-7ac3-439e-8b32-3b16d0a836e4.png">
 
 # Word Store / ![icon_min](https://user-images.githubusercontent.com/20946309/232350328-e2e4c18d-e8b3-4a93-99b2-d915165fbb83.png) 猫猫词库
 
