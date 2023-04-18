@@ -157,6 +157,7 @@ export const Menu : React.FC < Props > = (props : Props) => {
                             onClick={() => setAboutVisible(false)}></button>
                     </header>
                     <section className="modal-card-body has-text-black markdown">
+                        <img src={require('../../banner.png')} alt="猫猫词库" style={{display: 'inline-block', width: '100%'}}/>
                         <ReactMarkdown>{`
 ## 关于 猫猫词库 / Word Store
 
