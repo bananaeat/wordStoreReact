@@ -178,7 +178,7 @@ const WordLineFields = (props : Props) => {
                     <i
                         style={{
                         cursor: 'pointer',
-                        color: 'red'
+                        color: '#fe7186'
                     }}
                         className="fas fa-xmark"
                         aria-hidden="true"
@@ -193,7 +193,7 @@ const WordLineFields = (props : Props) => {
                     <i
                         style={{
                         cursor: 'pointer',
-                        color: 'green'
+                        color: 'blue'
                     }}
                         className="fas fa-pen fa-xs"
                         aria-hidden="true"
