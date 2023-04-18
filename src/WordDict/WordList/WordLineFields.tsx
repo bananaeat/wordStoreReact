@@ -173,14 +173,14 @@ const WordLineFields = (props : Props) => {
     } else {
         return (
             <div key={field.id}>
-                <b>{field.name}</b>
+                <b className='is-size-7'>{field.name}</b>
                 <span className='mx-1'>
                     <i
                         style={{
                         cursor: 'pointer',
                         color: 'red'
                     }}
-                        className="fas fa-xmark fa-lg"
+                        className="fas fa-xmark"
                         aria-hidden="true"
                         onClick={(e) => {
                         e.stopPropagation();
@@ -192,9 +192,10 @@ const WordLineFields = (props : Props) => {
                     }}></i>
                     <i
                         style={{
-                        cursor: 'pointer'
+                        cursor: 'pointer',
+                        color: 'green'
                     }}
-                        className="fas fa-pen"
+                        className="fas fa-pen fa-xs"
                         aria-hidden="true"
                         onClick={(e) => {
                         e.stopPropagation();
@@ -213,7 +214,7 @@ const WordLineFields = (props : Props) => {
                     }}></i>
                 </span>
                 <br/>
-                <div className='is-size-6'>{field.value}</div>
+                <div className='is-size-7'>{field.value}</div>
             </div>
         )
     }
