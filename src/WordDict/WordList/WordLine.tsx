@@ -105,7 +105,7 @@ const WordLine : React.FC < Props > = (props : Props) => {
                     overflow: 'hidden',
                     whiteSpace: 'nowrap',
                     textOverflow: 'ellipsis',
-                    maxWidth: '90%'
+                    maxWidth: '50%'
                 }}>
                     {!isEditingName
                         ? props.wordData.name
@@ -172,6 +172,7 @@ const WordLine : React.FC < Props > = (props : Props) => {
                     style={{
                     wordWrap: 'break-word'
                 }}>
+                    <i className='has-text-grey'>{props.wordData.name}</i><br />
                     {!isEditingDefinition
                         ? props.wordData.definition
                         : (
