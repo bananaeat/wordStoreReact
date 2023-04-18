@@ -5,9 +5,12 @@ import '@fortawesome/fontawesome-free/css/all.min.css';
 import {useState} from 'react';
 import {wordData} from '../Sidebar/SidebarAddWord';
 import {tagData} from '../Sidebar/SidebarAddTag';
+import WordLineFields from './WordLineFields';
+import { fieldData } from '../WordDict';
 
 type Props = {
     wordData: wordData;
+    fieldData: fieldData[];
     allTags: tagData[];
     onDelete: () => Promise < void >;
     onUpdate: (id : string, data : wordData) => Promise < boolean >;
@@ -25,6 +28,10 @@ const WordLine : React.FC < Props > = (props : Props) => {
 
     const [editedDefinition,
         setEditedDefinition] = useState(props.wordData.definition);
+
+    const [isEditingField, setIsEditingField] = useState(props.wordData.fields?.map((field) => {return {id: field.id, editing: false}}) || []);
+
+    const [editedFields, setEditedFields] = useState(props.wordData.fields || []);
 
     const [editedName,
         setEditedName] = useState(props.wordData.name);
@@ -56,7 +63,7 @@ const WordLine : React.FC < Props > = (props : Props) => {
                 <section className="modal-card-body">
                     {props.allTags.map((tag) => {
                         return (
-                            <span className={`tag ml-1 is-small is-${tag
+                            <span style={{cursor: 'pointer'}} className={`tag ml-1 is-small is-${tag
                                 .colour} ${selectedTags
                                 .some((t : tagData) => t.id == tag.id)
                                 ? ''
@@ -137,13 +144,14 @@ const WordLine : React.FC < Props > = (props : Props) => {
                     </span>
                 </div>
                 <span className="panel-icon ml-auto">
-                    <i className="fas fa-plus-minus" aria-hidden="true" onClick={(e) => {
+                    <i style={{cursor: 'pointer'}} className="fas fa-plus-minus" aria-hidden="true" onClick={(e) => {
                         e.stopPropagation();
                         setAddingTags(true);
                     }}></i>
                 </span>
                 <span className="panel-icon">
                     <i
+                        style={{cursor: 'pointer'}}
                         className={`fas fa-pen-to-square ${isEditingName
                         ? 'fa-beat-fade'
                         : ''}`}
@@ -155,7 +163,7 @@ const WordLine : React.FC < Props > = (props : Props) => {
                     }}></i>
                 </span>
                 <span className="panel-icon">
-                    <i className="fas fa-delete-left" aria-hidden="true" onClick={props.onDelete}></i>
+                    <i style={{cursor: 'pointer'}} className="fas fa-delete-left" aria-hidden="true" onClick={props.onDelete}></i>
                 </span>
             </div>
             <article
@@ -164,7 +172,7 @@ const WordLine : React.FC < Props > = (props : Props) => {
                 maxHeight: isExpanded
                     ? '200px'
                     : '0px',
-                overflow: 'hidden',
+                overflow: 'auto',
                 transition: 'max-height 0.3s ease-in-out'
             }}>
                 <div
@@ -189,6 +197,20 @@ const WordLine : React.FC < Props > = (props : Props) => {
                                 });
                             }}></textarea>
                         )}
+                    {props.wordData.fields && props.wordData.fields.map((field) => (
+                        <WordLineFields 
+                            key={field.id}
+                            field={field}
+                            fieldData={props.fieldData}
+                            isEditingField={isEditingField}
+                            setIsEditingField={setIsEditingField}
+                            editedFields={editedFields}
+                            setEditedFields={setEditedFields}
+                            onUpdate={props.onUpdate}
+                            wordData={props.wordData}
+                        />
+                        ))
+                    }
                 </div>
                 {WordLineAddTagModal}
             </article>

@@ -5,10 +5,12 @@ import '@fortawesome/fontawesome-free/css/all.min.css';
 import SidebarAddWord, {wordData, wordSaveResponse} from './SidebarAddWord';
 import SidebarAddTag, {tagData, tagSaveResponse} from './SidebarAddTag';
 import {loadFromLocal} from '../StorageUtils/Utils';
+import { fieldData } from '../WordDict';
 
 type Props = {
     updateData: (key : string, data : any) => void;
     tagData: tagData[];
+    fieldData: fieldData[];
 }
 
 const Sidebar : React.FC < Props > = (props : Props) => {
@@ -63,6 +65,36 @@ const Sidebar : React.FC < Props > = (props : Props) => {
           return false;
       }
     }
+
+    const onSaveField : (data : fieldData) => Promise < boolean > = async(fieldData) => {
+        try {
+            var fieldDict = loadFromLocal('fieldDict');
+            if (!fieldDict) {
+                fieldDict = [];
+            }
+            fieldDict.push(fieldData);
+            props.updateData('fieldDict', fieldDict)
+            return true;
+        } catch (error) {
+            console.error('Error saving to localStorage:', error);
+            return false;
+        }
+    }
+
+    const onDeleteField : (fieldID : string) => Promise < boolean > = async(fieldID) => {
+        try {
+            var fieldDict = loadFromLocal('fieldDict');
+            if (!fieldDict) {
+                fieldDict = [];
+            }
+            fieldDict = fieldDict.filter((item: fieldData) => item.id !== fieldID);
+            props.updateData('fieldDict', fieldDict)
+            return true;
+        } catch (error) {
+            console.error('Error saving to localStorage:', error);
+            return false;
+        }
+    }
         
 
     return (
@@ -78,6 +110,13 @@ const Sidebar : React.FC < Props > = (props : Props) => {
                 onSaveTag={async(tagData) => {
                 return await onSaveTag(tagData);
             }}
+                onSaveField={async(fieldData) => {
+                return await onSaveField(fieldData);
+            }}
+                onDeleteField={async(fieldID) => {
+                return await onDeleteField(fieldID);
+            }}
+                fieldData={props.fieldData}
                 tagData={props.tagData}/>
         </div>
     );

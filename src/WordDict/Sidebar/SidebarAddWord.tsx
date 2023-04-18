@@ -1,16 +1,21 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import 'bulma/css/bulma.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import {useState} from 'react';
 import {nanoid} from 'nanoid';
 import SidebarAddTag, {tagData, tagSaveResponse} from './SidebarAddTag';
+import {field} from '../WordList/WordList';
+import {FieldType, fieldData} from '../WordDict';
+import SidebarAddField from './SidebarAddField';
+import SidebarAddWordFieldDisplay from './SidebarAddWordFieldDisplay';
 
 export type wordData = {
     id: string;
     name: string;
     definition: string;
     tags: tagData[];
+    fields?: field[];
 };
 
 export type wordSaveResponse = boolean
@@ -19,7 +24,10 @@ type Props = {
     onSave: (data : wordData) => Promise < wordSaveResponse >;
     onDeleteTag: (tagID : string) => Promise < tagSaveResponse >;
     onSaveTag: (data : tagData) => Promise < tagSaveResponse >;
+    onDeleteField: (fieldID : string) => Promise < boolean >;
+    onSaveField: (data : fieldData) => Promise < boolean >;
     tagData: tagData[];
+    fieldData: fieldData[];
 }
 
 const SidebarAddWord : React.FC < Props > = (props : Props) => {
@@ -37,6 +45,18 @@ const SidebarAddWord : React.FC < Props > = (props : Props) => {
         setTagSetting] = useState(false);
     const [tagAdding,
         setTagAdding] = useState(false);
+    const [fieldAdding,
+        setFieldAdding] = useState(false);
+    const [fieldValue,
+        setFieldValue] = useState < field[] > ([]);
+
+    useEffect(() => {
+        setFieldValue(props
+        .fieldData
+        .map((item : fieldData) => {
+            return {id: item.id, name: item.name, value: item.type === FieldType.Boolean ? 'false' : ''}
+        }));
+    }, [props.fieldData]);
 
     const onWordBlur = () => {
         if (!word) {
@@ -51,12 +71,16 @@ const SidebarAddWord : React.FC < Props > = (props : Props) => {
             setWordWarning(true);
         } else {
             setWordWarning(false);
-            setWordSaveResponse(await props.onSave({id: nanoid(), name: word, definition, tags: selectedTags}));
+            console.log(fieldValue)
+            setWordSaveResponse(await props.onSave({id: nanoid(), name: word, definition, tags: selectedTags, fields: fieldValue}));
             setInterval(() => {
                 setWordSaveResponse(false);
             }, 3000);
             setWord("");
             setDefinition("");
+            setFieldValue(fieldValue.map((item : field) => {
+                return {id: item.id, name: item.name, value: ''}
+            }));
             setSelectedTags([]);
         }
     };
@@ -164,6 +188,34 @@ const SidebarAddWord : React.FC < Props > = (props : Props) => {
                                         ))}
                                 </div>
                             </div>
+
+                            <div>
+                                <label className="label has-text-info">其他字段 Other Fields<i
+                                    className={`fas fa-add m-1`}
+                                    aria-hidden="true"
+                                    style={{cursor: 'pointer'}}
+                                    onClick={() => setFieldAdding(!fieldAdding)}></i>
+                                </label>
+                                <SidebarAddField
+                                    modalOpen={fieldAdding}
+                                    setModalOpen={setFieldAdding}
+                                    onSaveField={async(f) => {
+                                    setFieldValue([
+                                        ...fieldValue, {
+                                            id: nanoid(),
+                                            name: f.name,
+                                            value: null
+                                        }
+                                    ]);
+                                    return await props.onSaveField(f);
+                                }}/>
+                            </div>
+
+                            {props
+                                .fieldData
+                                .map((f) => (
+                                    <SidebarAddWordFieldDisplay key={f.id} f={f} values={fieldValue} setValues={setFieldValue} onDeleteField={props.onDeleteField}/>
+                                ))}
 
                             {wordWarning && (
                                 <article className="message is-danger is-small">

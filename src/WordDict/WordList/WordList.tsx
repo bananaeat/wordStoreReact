@@ -9,16 +9,19 @@ import WordLine from './WordLine';
 import WordListPagination from './WordListPagination';
 import WordListAI from './WordListAI';
 import { nanoid } from 'nanoid';
+import { fieldData } from '../WordDict';
 
 type Props = {
     updateData: (key : string, data: any) => void;
     wordData: wordData[];
     tagData: tagData[];
+    fieldData: fieldData[];
     currentPage: number;
     setCurrentPage: (page : number) => void;
 }
 
-export type Word = { word: string, definition: string, tags: tagData[] }
+export interface field { id: string, name: string, value: any }
+export type Word = { word: string, definition: string, tags: tagData[], fields?: field[] }
 
 const WordList : React.FC < Props > = (props : Props) => {
     const [searchText,
@@ -150,6 +153,7 @@ const WordList : React.FC < Props > = (props : Props) => {
                                 allTags={props.tagData}
                                 key={word.id}
                                 wordData={word}
+                                fieldData={props.fieldData}
                                 onDelete={async() => {
                                 await onDeleteWord(word.id)
                             }}
