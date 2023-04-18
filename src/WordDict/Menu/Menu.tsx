@@ -3,6 +3,7 @@ import {wordData} from '../Sidebar/SidebarAddWord';
 import {tagData} from '../Sidebar/SidebarAddTag';
 import {loadFromLocal} from '../StorageUtils/Utils';
 import ReactMarkdown from 'react-markdown'
+import { fieldData } from '../WordDict';
 
 interface MenuItem {
     label : string;
@@ -14,6 +15,8 @@ type Props = {
     setWordData: (data : wordData[]) => void;
     tagData: tagData[];
     setTagData: (data : tagData[]) => void;
+    fieldData: fieldData[];
+    setFieldData: (data : fieldData[]) => void;
     setCurrentPage: (page : number) => void;
 }
 
@@ -30,7 +33,8 @@ export const Menu : React.FC < Props > = (props : Props) => {
             onClick: async() => {
                 const dataToSave = {
                     words: props.wordData,
-                    tags: props.tagData
+                    tags: props.tagData,
+                    fields: props.fieldData
                 };
 
                 const fileData = JSON.stringify(dataToSave);
@@ -82,6 +86,15 @@ export const Menu : React.FC < Props > = (props : Props) => {
                             .concat(tags);
                     }
                     props.setTagData(data.tags);
+
+                    const fields = loadFromLocal('fieldDict');
+                    if (fields) {
+                        data.fields = data
+                            .fields
+                            .filter((field : fieldData) => !fields.find((f : fieldData) => f.id === field.id))
+                            .concat(fields);
+                    }
+                    props.setFieldData(data.fields);
                     props.setCurrentPage(1);
                 }
             }

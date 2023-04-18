@@ -64,7 +64,7 @@ const WordDict: React.FC = () => {
   
   return (
     <div>
-      <Menu wordData={wordData} tagData={tagData} setTagData={(data) => updateData('tagDict', data)} setWordData={(data) => updateData('wordDict', data)} setCurrentPage={setCurrentPage}/>
+      <Menu wordData={wordData} tagData={tagData} fieldData={fieldData} setFieldData={(data) => updateData('fieldDict', data)} setTagData={(data) => updateData('tagDict', data)} setWordData={(data) => updateData('wordDict', data)} setCurrentPage={setCurrentPage}/>
       <div className="WordDict columns m-0 mt-6">
         <Sidebar updateData={updateData} tagData={tagData} fieldData={fieldData}/>
         <WordList updateData={updateData} wordData={wordData} fieldData={fieldData} tagData={tagData} currentPage={currentPage} setCurrentPage={setCurrentPage} />
