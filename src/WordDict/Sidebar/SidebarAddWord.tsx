@@ -52,6 +52,12 @@ const SidebarAddWord : React.FC < Props > = (props : Props) => {
         } else {
             setWordWarning(false);
             setWordSaveResponse(await props.onSave({id: nanoid(), name: word, definition, tags: selectedTags}));
+            setInterval(() => {
+                setWordSaveResponse(false);
+            }, 3000);
+            setWord("");
+            setDefinition("");
+            setSelectedTags([]);
         }
     };
 
@@ -70,6 +76,7 @@ const SidebarAddWord : React.FC < Props > = (props : Props) => {
                                         type="text"
                                         placeholder="词语"
                                         id="word"
+                                        value={word}
                                         onChange={event => setWord(event.target.value)}
                                         onBlur={onWordBlur}/> {wordWarning && (
                                         <p className="help is-danger">未填写词语名称 Word name required</p>
@@ -85,6 +92,7 @@ const SidebarAddWord : React.FC < Props > = (props : Props) => {
                                         type="text"
                                         placeholder="定义"
                                         id="definition"
+                                        value={definition}
                                         onChange={(event) => {
                                         setDefinition(event.target.value);
                                     }}/>

@@ -212,6 +212,7 @@ const WordListAIExtraction = (props : Props) => {
         const words = await wordExtraction(text, openaiKey, translationMode, props.tags, model);
         await props.addWords(words);
         setLoading(false);
+        setText('');
         props.hideModal();
     }
 
