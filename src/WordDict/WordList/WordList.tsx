@@ -147,6 +147,7 @@ const WordList : React.FC < Props > = (props : Props) => {
                         .slice((currentPage - 1) * maxPerPage, currentPage * maxPerPage)
                         .map((word : wordData) => {
                             return <WordLine
+                                allTags={props.tagData}
                                 key={word.id}
                                 wordData={word}
                                 onDelete={async() => {
