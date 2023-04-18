@@ -42,7 +42,13 @@ const WordDict: React.FC = () => {
       }
     };
 
-    loadData();
+    try{
+      loadData();
+    } catch (e) {
+      setWordData([]);
+      setTagData([]);
+      setFieldData([]);
+    }
   }, []);
 
   const updateData = (key: string, newData: any) => {

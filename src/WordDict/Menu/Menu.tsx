@@ -3,7 +3,7 @@ import {wordData} from '../Sidebar/SidebarAddWord';
 import {tagData} from '../Sidebar/SidebarAddTag';
 import {loadFromLocal} from '../StorageUtils/Utils';
 import ReactMarkdown from 'react-markdown'
-import { fieldData } from '../WordDict';
+import {fieldData} from '../WordDict';
 
 interface MenuItem {
     label : string;
@@ -69,33 +69,37 @@ export const Menu : React.FC < Props > = (props : Props) => {
                     input.click();
                 });
                 if (data) {
-                    const words = loadFromLocal('wordDict');
-                    if (words) {
-                        data.words = data
-                            .words
-                            .filter((word : wordData) => !words.find((w : wordData) => w.id === word.id))
-                            .concat(words);
-                    }
-                    props.setWordData(data.words);
+                    try {
+                        const words = loadFromLocal('wordDict');
+                        if (words) {
+                            data.words = data
+                                .words
+                                .filter((word : wordData) => !words.find((w : wordData) => w.id === word.id))
+                                .concat(words);
+                        }
+                        props.setWordData(data.words);
 
-                    const tags = loadFromLocal('tagDict');
-                    if (tags) {
-                        data.tags = data
-                            .tags
-                            .filter((tag : tagData) => !tags.find((t : tagData) => t.id === tag.id))
-                            .concat(tags);
-                    }
-                    props.setTagData(data.tags);
+                        const tags = loadFromLocal('tagDict');
+                        if (tags) {
+                            data.tags = data
+                                .tags
+                                .filter((tag : tagData) => !tags.find((t : tagData) => t.id === tag.id))
+                                .concat(tags);
+                        }
+                        props.setTagData(data.tags);
 
-                    const fields = loadFromLocal('fieldDict');
-                    if (fields) {
-                        data.fields = data
-                            .fields
-                            .filter((field : fieldData) => !fields.find((f : fieldData) => f.id === field.id))
-                            .concat(fields);
+                        const fields = loadFromLocal('fieldDict');
+                        if (fields) {
+                            data.fields = data
+                                .fields
+                                .filter((field : fieldData) => !fields.find((f : fieldData) => f.id === field.id))
+                                .concat(fields);
+                        }
+                        props.setFieldData(data.fields);
+                        props.setCurrentPage(1);
+                    } catch (e) {
+                        alert('错误: 导入文件格式不正确。 Error: Invalid file format.');
                     }
-                    props.setFieldData(data.fields);
-                    props.setCurrentPage(1);
                 }
             }
         }, {
@@ -170,7 +174,13 @@ export const Menu : React.FC < Props > = (props : Props) => {
                             onClick={() => setAboutVisible(false)}></button>
                     </header>
                     <section className="modal-card-body has-text-black markdown">
-                        <img src={require('../../banner.png')} alt="猫猫词库" style={{display: 'inline-block', width: '100%'}}/>
+                        <img
+                            src={require('../../banner.png')}
+                            alt="猫猫词库"
+                            style={{
+                            display: 'inline-block',
+                            width: '100%'
+                        }}/>
                         <ReactMarkdown>{`
 ## 关于 猫猫词库 / Word Store
 
