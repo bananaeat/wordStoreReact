@@ -198,17 +198,16 @@ const WordLine : React.FC < Props > = (props : Props) => {
                             }}></textarea>
                         )}
                     {props.wordData.fields && props.wordData.fields.map((field) => (
-                        <WordLineFields 
-                            key={field.id}
-                            field={field}
-                            fieldData={props.fieldData}
-                            isEditingField={isEditingField}
-                            setIsEditingField={setIsEditingField}
-                            editedFields={editedFields}
-                            setEditedFields={setEditedFields}
-                            onUpdate={props.onUpdate}
-                            wordData={props.wordData}
-                        />
+                            <WordLineFields 
+                                key={field.id}
+                                field={field}
+                                isEditingField={isEditingField}
+                                setIsEditingField={setIsEditingField}
+                                editedFields={editedFields}
+                                setEditedFields={setEditedFields}
+                                onUpdate={props.onUpdate}
+                                wordData={props.wordData}
+                            />
                         ))
                     }
                 </div>

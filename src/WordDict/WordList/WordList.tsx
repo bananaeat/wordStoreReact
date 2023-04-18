@@ -9,7 +9,7 @@ import WordLine from './WordLine';
 import WordListPagination from './WordListPagination';
 import WordListAI from './WordListAI';
 import { nanoid } from 'nanoid';
-import { fieldData } from '../WordDict';
+import { FieldType, fieldData } from '../WordDict';
 
 type Props = {
     updateData: (key : string, data: any) => void;
@@ -20,7 +20,7 @@ type Props = {
     setCurrentPage: (page : number) => void;
 }
 
-export interface field { id: string, name: string, value: any }
+export interface field { id: string, name: string, type: FieldType, value: any }
 export type Word = { word: string, definition: string, tags: tagData[], fields?: field[] }
 
 const WordList : React.FC < Props > = (props : Props) => {

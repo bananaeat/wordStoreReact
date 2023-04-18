@@ -54,7 +54,7 @@ const SidebarAddWord : React.FC < Props > = (props : Props) => {
         setFieldValue(props
         .fieldData
         .map((item : fieldData) => {
-            return {id: item.id, name: item.name, value: item.type === FieldType.Boolean ? 'false' : ''}
+            return {...item, value: item.type === FieldType.Boolean ? 'false' : ''}
         }));
     }, [props.fieldData]);
 
@@ -79,7 +79,7 @@ const SidebarAddWord : React.FC < Props > = (props : Props) => {
             setWord("");
             setDefinition("");
             setFieldValue(fieldValue.map((item : field) => {
-                return {id: item.id, name: item.name, value: ''}
+                return {...item, value: item.type === FieldType.Boolean ? 'false' : ''}
             }));
             setSelectedTags([]);
         }
@@ -204,6 +204,7 @@ const SidebarAddWord : React.FC < Props > = (props : Props) => {
                                         ...fieldValue, {
                                             id: nanoid(),
                                             name: f.name,
+                                            type: f.type,
                                             value: null
                                         }
                                     ]);
