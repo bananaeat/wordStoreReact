@@ -7,6 +7,7 @@
 
 # testing
 /coverage
+/test
 
 # production
 /build
@@ -22,3 +23,5 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+test/word_store.json
+test/word_store.json
