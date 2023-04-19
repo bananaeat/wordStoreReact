@@ -118,8 +118,6 @@ const wordExtraction = async(text : string, openai_key : string, translationMode
             return {word, definition}
         });
 
-    console.log(data)
-
     var taggingString = ""
     var taggingData : any = []
 
@@ -175,8 +173,6 @@ const wordExtraction = async(text : string, openai_key : string, translationMode
             });
     }
 
-    console.log(taggingData)
-
     const returnData = taggingData.length == 0
         ? data.map((word : any) => {
             return {word: word.word, definition: word.definition, tags: []}
@@ -185,8 +181,6 @@ const wordExtraction = async(text : string, openai_key : string, translationMode
             const tagList = taggingData.filter((tag : any) => tag.word === word.word).map((tag : any) => tag.tagList)[0] || [];
             return {word: word.word, definition: word.definition, tags: tagList}
         })
-
-    console.log(returnData)
 
     return returnData as Word[];
 }

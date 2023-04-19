@@ -8,6 +8,7 @@ import '@fortawesome/fontawesome-free/css/all.min.css';
 import {wordData} from './Sidebar/SidebarAddWord';
 import { tagData } from './Sidebar/SidebarAddTag';
 import { saveToLocal } from './StorageUtils/Utils';
+import { nanoid } from 'nanoid';
 
 export enum FieldType {
   Text = 'Text',
@@ -25,9 +26,26 @@ const WordDict: React.FC = () => {
   const [fieldData, setFieldData] = React.useState<fieldData[]>([]);
   const [currentPage, setCurrentPage] = React.useState(1);
 
+  const loadExtensionData = () => {
+    const loadedWordData = JSON.parse(localStorage.getItem('wordDictFromExtension') ?? '[]');
+    localStorage.setItem('wordDictFromExtension', '[]');
+    const currentWords = JSON.parse(localStorage.getItem('wordDict') ?? '[]');
+    const newWords = currentWords.concat(loadedWordData.filter((word: string) => !currentWords.some((currentWord: any) => currentWord.name === word))
+    .map((word: string) => {
+      return {
+        id: nanoid(),
+        name: word,
+        definition: `从chrome扩展程序添加。Added from Extension.`,
+        tags: []
+        }
+      }));
+      return newWords;
+    }
+
   useEffect(() => {
     const loadData = () => {
-      const loadedWordData = JSON.parse(localStorage.getItem('wordDict') ?? '[]');
+      const loadedWordData = loadExtensionData();
+      saveToLocal('wordDict', loadedWordData);
       const loadedTagData = JSON.parse(localStorage.getItem('tagDict') ?? '[]');
       const loadedFieldData = JSON.parse(localStorage.getItem('fieldDict') ?? '[]');
 
@@ -50,6 +68,12 @@ const WordDict: React.FC = () => {
       setFieldData([]);
     }
   }, []);
+
+  document.addEventListener("extensionDict", (e: any) => {
+    const loadedWordData = loadExtensionData();
+    saveToLocal('wordDict', loadedWordData);
+    setWordData(loadedWordData);
+  });
 
   const updateData = (key: string, newData: any) => {
     switch (key) {

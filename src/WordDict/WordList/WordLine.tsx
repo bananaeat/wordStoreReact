@@ -101,7 +101,7 @@ const WordLine : React.FC < Props > = (props : Props) => {
     )
 
     return (
-        <div>
+        <div className='wordline'>
             <div className="panel-block is-active ml-3 is-flex" onClick={handlePanelClick}>
                 <span className="panel-icon">
                     <i className="fas fa-book" aria-hidden="true"></i>

@@ -71,8 +71,9 @@ const SidebarAddWord : React.FC < Props > = (props : Props) => {
             setWordWarning(true);
         } else {
             setWordWarning(false);
-            console.log(fieldValue)
-            setWordSaveResponse(await props.onSave({id: nanoid(), name: word, definition, tags: selectedTags, fields: fieldValue}));
+            setWordSaveResponse(await props.onSave({id: nanoid(), name: word, definition, tags: selectedTags, 
+                fields: fieldValue.filter((item : field) => item.value !== (item.type === FieldType.Boolean ? 'false' : ''))
+            }));
             setInterval(() => {
                 setWordSaveResponse(false);
             }, 3000);
